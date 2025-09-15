@@ -3677,21 +3677,17 @@ input, select, textarea {
 		@media screen and (max-width: 980px) {
 
 			#contact > .inner {
-				display: block;
+				display: flex;
+				flex-direction: column;
 			}
 
-				.contact-methods {
- 			   flex-direction: column;
-}
 				#contact > .inner > :nth-child(2n - 1) {
 					padding: 4em 0 2em 0 ;
 					border-right: 0;
-					width: 100%;
 				}
 
 				#contact > .inner > :nth-child(2n) {
 					padding-left: 0;
-					width: 100%;
 				}
 
 				#contact > .inner > .split > * {
