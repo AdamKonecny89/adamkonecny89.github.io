@@ -1,6 +1,33 @@
 <!DOCTYPE HTML>
 <html>
     <head>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+    <style>
+    @media screen and (max-width: 736px) { 
+        
+        /* 1. Vynucení vertikálního bloku místo horizontálního flexboxu */
+        ul.vertikalni-mobile {
+            display: block !important; 
+        }
+        
+        /* 2. Každé tlačítko se roztáhne na celou šířku a přidá se mezera */
+        ul.vertikalni-mobile li {
+            width: 100% !important;
+            margin-bottom: 1em !important; 
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+        
+        /* 3. Tlačítko uvnitř <li> se roztáhne na plnou šířku */
+        ul.vertikalni-mobile li .button {
+            width: 100% !important;
+        }
+    }
+    </style>
+    </head>
+    <head>
         <title>Pro pořadatele - Spirit Divočiny</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -39,21 +66,19 @@
                                     </header>
                                     <p>Zde najdete veškeré potřebné materiály ke stažení. Prosíme o jejich použití při propagaci našich koncertů. Děkujeme!</p>
                                     
-                                    <div class="box">
-                                        <div class="content">
-                                            <h3>Soubory ke stažení</h3>
-                                            <ul class="actions">
-                                                <li><a href="Ke stazeni/stageplan.jpg" download class="button primary">Stageplan (JPG)</a></li>
-                                                <li><a href="Ke stazeni/Cernynapis.svg" download class="button">Nápis 1 (svg)</a></li>
-                                                <li><a href="Ke stazeni/Bilynapis.svg" download class="button">Nápis 2 (svg)</a></li>
-                                                <li><a href="Ke stazeni/Prasorožec LOGO.svg" download class="button">Logo (svg)</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="box">
+                                    <div class="content">
+                                        <h3>Soubory ke stažení</h3> 
+                                        <ul class="actions vertikalni-mobile"> 
+                                            <li><a href="Ke stazeni/stageplan.jpg" download class="button primary">Stageplan (JPG)</a></li>
+                                            <li><a href="Ke stazeni/Cernynapis.svg" download class="button">Nápis 1 (svg)</a></li>
+                                            <li><a href="Ke stazeni/Bilynapis.svg" download class="button">Nápis 2 (svg)</a></li>
+                                            <li><a href="Ke stazeni/Prasorožec LOGO.svg" download class="button">Logo (svg)</a></li>
+                                        </ul>
                                     </div>
                                     
                                 </div>
                             </section>
-
                     </div>
 
                 <footer id="footer">
