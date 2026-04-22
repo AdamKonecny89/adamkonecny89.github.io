@@ -115,38 +115,66 @@
 
 					</div>
 
+<style>
+    #contact-flex {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    #fb-column {
+        flex: 1;
+        min-width: 300px;
+        text-align: center;
+        /* Čára jen pro počítač */
+        border-left: 1px solid rgba(255, 255, 255, 0.1); 
+        padding-left: 2em;
+    }
+
+    /* Magie pro mobil */
+    @media screen and (max-width: 736px) {
+        #contact-flex {
+            display: block;
+        }
+        #fb-column {
+            border-left: none; /* Tady tu čáru na mobilu zabijeme */
+            padding-left: 0;
+            margin-top: 3em;
+            border-top: 1px solid rgba(255, 255, 255, 0.05); /* Volitelná velmi jemná linka nad FB */
+            padding-top: 3em;
+        }
+    }
+</style>
+
 <section id="contact">
-    <div class="inner">
-        <section>
-            <div class="contact-method">
+    <div class="inner" id="contact-flex">
+        
+        <div style="flex: 1; min-width: 300px;">
+            <div class="contact-method" style="margin-bottom: 2em;">
                 <span class="icon solid alt fa-envelope"></span>
                 <h3>Email</h3>
                 <a href="mailto:spiritdivociny@gmail.com">spiritdivociny@gmail.com</a>
             </div>
-            <br>
             <div class="contact-method">
                 <span class="icon solid alt fa-phone"></span>
                 <h3>Telefon</h3>
                 <span>+420 732 757 535</span>
             </div>
-        </section>
-
-        <section class="split">
-    <section style="padding: 0; display: flex; align-items: center; justify-content: center;">
-        <div style="text-align: center; width: 100%; max-width: 300px;">
-            <span class="icon brands fa-facebook-f" style="font-size: 2.5em; color: rgba(255, 255, 255, 0.4); margin-bottom: 0.5em; display: block;"></span>
-            
-            <h3 style="letter-spacing: 2px; margin-bottom: 0.5em;">SLEDUJ DIVOČINU</h3>
-            
-            <p style="font-size: 0.85em; opacity: 0.6; line-height: 1.5; margin-bottom: 1.5em;">
-                Reporty, fotky a záchvaty<br>ze zkušebny najdeš na FB.
-            </p>
-            
-            <ul class="actions stacked" style="margin: 0 auto; max-width: 180px;">
-                <li><a href="https://www.facebook.com/SpiritDivociny" class="button small" target="_blank" style="box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);">VSTOUPIT</a></li>
-            </ul>
         </div>
-    </section>
+
+        <div id="fb-column">
+            <div style="display: inline-block; vertical-align: middle;">
+                <span class="icon brands fa-facebook-f" style="font-size: 2em; color: rgba(255, 255, 255, 0.3); margin-bottom: 0.5em; display: block;"></span>
+                <h3 style="letter-spacing: 2px; margin-bottom: 0.5em;">SLEDUJ DIVOČINU</h3>
+                <p style="font-size: 0.85em; opacity: 0.6; margin-bottom: 1.5em;">
+                    Reporty, fotky a záchvaty<br>ze zkušebny najdeš na FB.
+                </p>
+                <ul class="actions stacked" style="margin: 0 auto; max-width: 150px;">
+                    <li><a href="https://www.facebook.com/SpiritDivociny" class="button small" target="_blank" style="box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);">VSTOUPIT</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
 </section>
 
 				<!-- Footer -->
