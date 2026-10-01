@@ -1,0 +1,6 @@
+[
+  { "id": "vojta", "jmeno": "Vojta", "role": "Zpěv / kytara", "foto": "", "bio": "" },
+  { "id": "matous", "jmeno": "Matouš", "role": "Kytara", "foto": "", "bio": "" },
+  { "id": "pawel", "jmeno": "Pawel", "role": "Baskytara", "foto": "", "bio": "" },
+  { "id": "adam", "jmeno": "Adam", "role": "Bicí", "foto": "", "bio": "" }
+]
