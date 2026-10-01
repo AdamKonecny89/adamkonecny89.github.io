@@ -34,8 +34,12 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Copy index.html to 404.html
-        run: cp .output/public/index.html .output/public/404.html || true
+      # VYTVOŘENÍ INDEXU A 404 PRO GITHUB PAGES
+      - name: Create index.html and 404.html from shell
+        run: |
+          cd .output/public
+          cp _shell.html index.html || cp *.html index.html || true
+          cp index.html 404.html || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
