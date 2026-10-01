@@ -33,8 +33,6 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          NITRO_PRESET: static
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
