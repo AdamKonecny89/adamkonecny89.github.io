@@ -17,7 +17,7 @@ import albumAsset from "@/assets/styl-album-cover.png";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Spirit Divočiny — Pražskej rock’n’roll" },
+      { title: "Spirit Divočiny — Pražskej cock’n’roll" },
       { name: "description", content: "Oficiální web pražské rock’n’rollové kapely Spirit Divočiny. Hudba, koncerty, texty a kontakt." },
       { property: "og:title", content: "Spirit Divočiny — Pražskej rock’n’roll" },
       { property: "og:description", content: "Rock’n’roll z nás dělá divočáky, a z Tebe taky, bráško!" },
@@ -36,11 +36,11 @@ const spotifyAlbum = "https://open.spotify.com/album/4BGzsuFGCm2NjSCeLtaoUr?si=3
 const youtubeAlbum = "https://youtube.com/playlist?list=OLAK5uy_nYHR4MxPn09bZds-qo2_nz0UNThu4ahys&si=y8ZdCgBqSzaLHLTq";
 const tracks = ["Sypej", "Svině", "Styl", "Migranti", "Lítat", "Foglarovka", "Dezinformace", "Bjørndalen", "Hentai", "Růže", "Ivana"];
 const organizerFiles = [
-  { label: "Stageplan", format: "JPG", href: "https://spiritdivociny.cz/Ke%20stazeni/stageplan.jpg" },
-  { label: "Prasorožec", format: "SVG", href: "https://spiritdivociny.cz/Ke%20stazeni/PRASOROZEC.svg" },
-  { label: "Logo — bílá verze", format: "SVG", href: "https://spiritdivociny.cz/Ke%20stazeni/NAPIS-BILY.svg" },
-  { label: "Logo — černá verze", format: "SVG", href: "https://spiritdivociny.cz/Ke%20stazeni/NAPIS-CERNY.svg" },
-  { label: "Samolepková verze", format: "SVG", href: "https://spiritdivociny.cz/Ke%20stazeni/verze-sticker.svg" },
+  { label: "Stageplan", format: "JPG", href: "/stageplan.jpg" },
+  { label: "Prasorožec", format: "SVG", href: "/PRASOROZEC.svg" },
+  { label: "Logo — bílá verze", format: "SVG", href: "/NAPIS-BILY.svg" },
+  { label: "Logo — černá verze", format: "SVG", href: "/NAPIS-CERNY.svg" },
+  { label: "Samolepková verze", format: "SVG", href: "/verze-sticker.svg" },
 ];
 
 const songLinks: Record<string, { spotify: string; youtube: string }> = {
@@ -61,13 +61,13 @@ function Stamp({ className = "" }: { className?: string }) {
   return <div className={`relative grid place-items-center rounded-full border-[3px] border-mascot-orange bg-background/80 p-5 shadow-[0_0_0_2px_rgba(0,0,0,0.55)] backdrop-blur-sm ${className}`}>
     <svg viewBox="0 0 200 200" className="absolute inset-0 size-full" aria-hidden="true">
       <defs>
-        <path id="stamp-arc" d="M 27.6,138.5 A 82,82 0 1 1 172.4,138.5" fill="none"/>
+        <path id="stamp-arc" d="M 38.3,154 A 82,82 0 1 1 161.7,154" fill="none"/>
         <path id="stamp-arc-bottom" d="M 58.8,184.5 A 94,94 0 0 0 141.2,184.5" fill="none"/>
       </defs>
-      <text textAnchor="middle" className="fill-foreground font-display text-[16px] uppercase tracking-[0.05em]"><textPath href="#stamp-arc" startOffset="50%">Rock’n’roll z nás dělá divočáky</textPath></text>
+      <text textAnchor="middle" className="fill-foreground font-display text-[16.5px] uppercase tracking-[0.05em]"><textPath href="#stamp-arc" startOffset="50%">Rock’n’roll z nás dělá divočáky</textPath></text>
       <text textAnchor="middle" className="fill-mascot-orange font-display text-[14px] uppercase tracking-[0.08em]"><textPath href="#stamp-arc-bottom" startOffset="50%">Od 2022</textPath></text>
     </svg>
-    <img src="/favicon.svg" alt="" aria-hidden="true" className="size-[68%] translate-y-[4%] object-contain" />
+    <img src="/favicon.svg" alt="" aria-hidden="true" className="aspect-square w-[90%] object-contain" />
   </div>;
 
 }
@@ -252,6 +252,6 @@ function Index() {
         </div>
       </div>
     </section>
-    <footer className="border-t border-border px-5 py-8 text-center text-xs uppercase tracking-widest text-muted-foreground">© 2026 Spirit Divočiny · Spirit Indočíny</footer>
+    <footer className="border-t border-border px-5 py-8 text-center text-xs uppercase tracking-widest text-muted-foreground">© 2026 Spirit Divočiny · Punkrock z Indočíny</footer>
   </main>;
 }
