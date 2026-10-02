@@ -21,8 +21,11 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Oficiální web pražské rock’n’rollové kapely Spirit Divočiny. Hudba, koncerty, texty a kontakt." },
       { property: "og:title", content: "Spirit Divočiny — Pražskej rock’n’roll" },
       { property: "og:description", content: "Rock’n’roll z nás dělá divočáky, a z Tebe taky, bráško!" },
+      { property: "og:image", content: "https://spiritdivociny.cz/og-image.png" },
+      { property: "og:url", content: "https://spiritdivociny.cz/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://spiritdivociny.cz/og-image.png" },
     ],
   }),
   component: Index,
@@ -181,7 +184,7 @@ function Index() {
         <ol className="mt-8 border-l border-border pl-6 md:pl-10">
           {historie.map((milnik, index) => <li key={milnik.rok} className="relative pb-10 last:pb-0">
             <span className={`absolute -left-[1.85rem] top-2 size-3 md:-left-[2.85rem] ${index % 3 === 0 ? "bg-primary" : index % 3 === 1 ? "bg-mascot-blue" : "bg-mascot-orange"}`} aria-hidden="true"/>
-            <p className="font-display text-4xl uppercase leading-none md:text-6xl">{milnik.rok}</p>
+            <p className="font-display text-3xl uppercase leading-none md:text-5xl">{milnik.rok}</p>
             <h4 className="mt-3 text-sm font-bold uppercase tracking-[0.15em]">{milnik.nadpis}</h4>
             <p className="mt-2 max-w-2xl leading-relaxed text-muted-foreground">{milnik.text || "Doplníme brzy."}</p>
           </li>)}
