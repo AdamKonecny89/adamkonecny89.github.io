@@ -163,19 +163,28 @@ function Index() {
       <div className="mt-20">
         <h3 className="font-display text-2xl uppercase text-mascot-orange md:text-3xl">Sestava</h3>
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {clenove.map((clen, index) => <article key={clen.id} className="border border-border bg-surface">
-            <div className="relative aspect-[3/4] w-full overflow-hidden bg-background">
-              {clen.foto
-                ? <img src={clen.foto} loading="lazy" alt={`${clen.jmeno} — ${clen.role}`} className="size-full object-cover grayscale transition duration-500 hover:grayscale-0"/>
-                : <div className="grid size-full place-items-center"><img src="/favicon.svg" alt="" aria-hidden="true" className="size-2/5 opacity-20"/></div>}
-              <span className={`absolute inset-x-0 bottom-0 h-1 ${index % 3 === 0 ? "bg-primary" : index % 3 === 1 ? "bg-mascot-blue" : "bg-mascot-orange"}`} aria-hidden="true"/>
-            </div>
-            <div className="p-5">
-              <h4 className="font-display text-3xl uppercase">{clen.jmeno}</h4>
-              <p className="mt-1 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-mascot-orange">{clen.role}</p>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{clen.bio || "Medailonek se chystá."}</p>
-            </div>
-          </article>)}
+          {clenove.map((clen, index) => {
+            const cropClass = {
+              vojta: "object-[70%_15%]",
+              matous: "object-[center_8%]",
+              pawel: "object-[center_22%]",
+              adam: "object-center",
+            }[clen.id] ?? "object-center";
+
+            return <article key={clen.id} className="border border-border bg-surface">
+              <div className="relative aspect-[3/4] w-full overflow-hidden bg-background">
+                {clen.foto
+                  ? <img src={clen.foto} loading="lazy" alt={`${clen.jmeno} — ${clen.role}`} className={`size-full object-cover ${cropClass} grayscale transition duration-500 hover:grayscale-0`} />
+                  : <div className="grid size-full place-items-center"><img src="/favicon.svg" alt="" aria-hidden="true" className="size-2/5 opacity-20"/></div>}
+                <span className={`absolute inset-x-0 bottom-0 h-1 ${index % 3 === 0 ? "bg-primary" : index % 3 === 1 ? "bg-mascot-blue" : "bg-mascot-orange"}`} aria-hidden="true"/>
+              </div>
+              <div className="p-5">
+                <h4 className="font-display text-3xl uppercase">{clen.jmeno}</h4>
+                <p className="mt-1 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-mascot-orange">{clen.role}</p>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{clen.bio || "Medailonek se chystá."}</p>
+              </div>
+            </article>;
+          })}
         </div>
       </div>
 
@@ -184,7 +193,7 @@ function Index() {
         <ol className="mt-8 border-l border-border pl-6 md:pl-10">
           {historie.map((milnik, index) => <li key={milnik.rok} className="relative pb-10 last:pb-0">
             <span className={`absolute -left-[1.85rem] top-2 size-3 md:-left-[2.85rem] ${index % 3 === 0 ? "bg-primary" : index % 3 === 1 ? "bg-mascot-blue" : "bg-mascot-orange"}`} aria-hidden="true"/>
-            <p className="font-display text-3xl uppercase leading-none md:text-5xl">{milnik.rok}</p>
+            <p className="font-display text-2xl uppercase leading-none md:text-4xl">{milnik.rok}</p>
             <h4 className="mt-3 text-sm font-bold uppercase tracking-[0.15em]">{milnik.nadpis}</h4>
             <p className="mt-2 max-w-2xl leading-relaxed text-muted-foreground">{milnik.text || "Doplníme brzy."}</p>
           </li>)}
@@ -231,17 +240,24 @@ function Index() {
 
     <section id="texty" className="section-shell">
       <SectionTitle>Texty</SectionTitle>
-      <div className="border-t border-border">{texty.map((song) => { const open = openSong === song.nazev; const links = songLinks[song.nazev]; return <div key={song.nazev} className="border-b border-border"><button onClick={() => setOpenSong(open ? null : song.nazev)} className="flex w-full items-center gap-5 py-6 text-left hover:text-primary" aria-expanded={open}><span className="text-xs text-primary">{song.cislo}</span><span className="flex-1 font-display text-3xl uppercase md:text-5xl">{song.nazev}</span><span className="text-3xl">{open ? "−" : "+"}</span></button>{open && <div className="max-w-2xl pb-10 pl-11">
-        {links && <div className="mb-6 flex items-center gap-4"><span className="text-[0.6rem] font-black uppercase tracking-[0.3em] text-muted-foreground">Poslechni si</span><a href={links.spotify} target="_blank" rel="noreferrer" aria-label={`${song.nazev} na Spotify`} className="text-muted-foreground transition-colors hover:text-primary"><Music2 className="size-4"/></a><a href={links.youtube} target="_blank" rel="noreferrer" aria-label={`${song.nazev} na YouTube`} className="text-muted-foreground transition-colors hover:text-mascot-orange"><Youtube className="size-4"/></a></div>}
+      <div className="border-t border-border">{texty.map((song) => { const open = openSong === song.nazev; const links = songLinks[song.nazev]; return <div key={song.nazev} className="border-b border-border"><button onClick={() => setOpenSong(open ? null : song.nazev)} className="flex w-full items-center gap-5 py-6 text-left hover:text-primary" aria-expanded={open}><span className="text-xs text-primary">{song.cislo}</span><span className="flex-1 font-display text-xl uppercase md:text-3xl">{song.nazev}</span><span className="text-3xl">{open ? "−" : "+"}</span></button>{open && <div className="max-w-2xl pb-10 pl-11">
+        {links && <div className="mb-6 flex items-center gap-4"><span className="text-[0.6rem] font-black uppercase tracking-[0.3em] text-muted-foreground">Poslechni si</span><a href={links.spotify} target="_blank" rel="noreferrer" aria-label={`${song.nazev} na Spotify`} className="text-muted-foreground transition-colors hover:text-primary"><img src="/Spotify_icon.svg" alt="Spotify" className="size-4" /></a><a href={links.youtube} target="_blank" rel="noreferrer" aria-label={`${song.nazev} na YouTube`} className="text-muted-foreground transition-colors hover:text-mascot-orange"><img src="/YouTube_full-color_icon.svg" alt="YouTube" className="size-4" /></a></div>}
         <Lyrics text={song.text}/>
       </div>}</div>})}</div>
     </section>
 
     <section id="kontakt" className="border-t border-border bg-surface"><div className="section-shell">
       <SectionTitle>Kontakt</SectionTitle>
-      <div className="grid gap-14 lg:grid-cols-2">
-        <div><p className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Booking / koncerty / média</p><a href="mailto:spiritdivociny@gmail.com" className="mt-4 block break-all font-display text-3xl uppercase hover:text-primary md:text-5xl">spiritdivociny@gmail.com</a><a href="tel:+420732757535" className="mt-5 block text-xl font-bold hover:text-primary">+420 732 757 535</a><div className="mt-12 flex gap-4">{[[Facebook,"Facebook","https://www.facebook.com/SpiritDivociny"],[Instagram,"Instagram","https://www.instagram.com/spiritdivocinyband"],[Music2,"Spotify",spotifyAlbum],[Youtube,"YouTube",youtubeAlbum]].map(([Icon,label,url]) => { const SocialIcon = Icon as typeof Facebook; return <a key={label as string} href={url as string} target="_blank" rel="noreferrer" aria-label={label as string} className="grid size-12 place-items-center border border-border transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"><SocialIcon/></a>})}</div></div>
-        <form action="mailto:spiritdivociny@gmail.com" method="post" encType="text/plain" className="grid gap-5"><label className="grid gap-2 text-xs font-bold uppercase tracking-widest">Jméno<input name="name" required className="h-12 border-b border-border bg-transparent text-base font-normal outline-none focus:border-primary"/></label><label className="grid gap-2 text-xs font-bold uppercase tracking-widest">E-mail<input name="email" type="email" required className="h-12 border-b border-border bg-transparent text-base font-normal outline-none focus:border-primary"/></label><label className="grid gap-2 text-xs font-bold uppercase tracking-widest">Zpráva<textarea name="message" required rows={4} className="resize-none border-b border-border bg-transparent py-3 text-base font-normal outline-none focus:border-primary"/></label><Button type="submit" variant="stage" size="xl" className="mt-2 justify-self-start">Poslat zprávu <ArrowUpRight/></Button></form>
+      <div className="max-w-3xl">
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Booking / koncerty / média</p>
+        <a href="mailto:spiritdivociny@gmail.com" style={{ wordBreak: "normal" }} className="mt-4 block font-display text-[clamp(1.5rem,4vw,3rem)] uppercase leading-none hover:text-primary md:text-5xl">spiritdivociny@gmail.com</a>
+        <a href="tel:+420732757535" className="mt-5 block text-xl font-bold hover:text-primary">+420 732 757 535</a>
+        <div className="mt-12 flex gap-4">{[
+          { label: "Facebook", href: "https://www.facebook.com/SpiritDivociny", icon: "/facebook-pismeno.svg" },
+          { label: "Instagram", href: "https://www.instagram.com/spiritdivocinyband", icon: "/Instagram_logo.svg" },
+          { label: "Spotify", href: spotifyAlbum, icon: "/Spotify_icon.svg" },
+          { label: "YouTube", href: youtubeAlbum, icon: "/YouTube_full-color_icon.svg" },
+        ].map(({ label, href, icon }) => <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} className="grid size-12 place-items-center border-2 border-border bg-background shadow-[3px_3px_0_0_rgba(0,0,0,0.95)] transition-all duration-150 hover:-translate-y-1 hover:translate-x-1 hover:border-primary hover:shadow-[6px_6px_0_0_rgba(0,0,0,0.95)]"><img src={icon} alt={label} className="size-5" /></a>)}</div>
       </div>
     </div></section>
     <section id="poradatele" className="border-t border-border bg-background">
