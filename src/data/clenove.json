@@ -1,6 +1,6 @@
 [
-  { "id": "vojta", "jmeno": "Vojta", "role": "Zpěv / kytara", "foto": "", "bio": "" },
-  { "id": "matous", "jmeno": "Matouš", "role": "Kytara", "foto": "", "bio": "" },
+  { "id": "vojta", "jmeno": "Vojta", "role": "Zpěv / kytara", "foto": "/medailonek Vojta.jpg", "bio": "" },
+  { "id": "matous", "jmeno": "Matouš", "role": "Kytara", "foto": "/medailonek Matouš.jpg", "bio": "" },
   { "id": "pawel", "jmeno": "Pawel", "role": "Baskytara", "foto": "/pawel-medailonek.jpg", "bio": "" },
   { "id": "adam", "jmeno": "Adam", "role": "Bicí", "foto": "", "bio": "" }
 ]

@@ -1,12 +1,5 @@
 {
   "nadchazejici": [
-     {
-      "datum": "04. 10. 2026",
-      "cas": "11:00–22:00",
-      "misto": "Garáž Fest — Malešický park, Praha",
-      "sKym": "LUCIE, Yelling Orangutans, T-A-K, Hoch me 5, Světadíl, Mad Dog, Slimbeetch, Nekecej",
-      "udalost": "https://www.facebook.com/events/2032034061013899"
-    },
     {
       "datum": "14. 10. 2026",
       "cas": "21:00",
@@ -26,18 +19,23 @@
       "cas": "20:00",
       "misto": "Modrá Vopice, Praha",
       "sKym": "Bude upřesněno",
-      "udalost": ""
+      "udalost": "https://www.facebook.com/events/1645267793603635"
     },
     {
       "datum": "15. 01. 2027",
       "cas": "19:00",
       "misto": "Modrý Trpaslík, Česká Třebová",
-      "sKym": "Bude upřesněno",
+      "sKym": "Oversky Doe",
       "udalost": "https://bandzone.cz/spiritdivociny?at=gig"
     }
   ],
   "probehle": [
-      {
+    {
+      "datum": "04. 10. 2026",
+      "misto": "Garáž Fest — Malešický park, Praha",
+      "sKym": "LUCIE, Yelling Orangutans, T-A-K, Hoch me 5, Světadíl, Mad Dog, Slimbeetch, Nekecej"
+    },
+    {
       "datum": "23. 09. 2026",
       "misto": "Strahov Open Air Festival — Bar Desítka, Praha",
       "sKym": "Pearly Seconds, Rozz"
