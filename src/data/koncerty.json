@@ -1,24 +1,10 @@
 {
   "nadchazejici": [
     {
-      "datum": "14. 10. 2026",
-      "cas": "21:00",
-      "misto": "Vagon Club, Praha",
-      "sKym": "Soul Keeper, Vivid Eyes",
-      "udalost": "https://www.facebook.com/events/1120324417085110/"
-    },
-    {
-      "datum": "23. 10. 2026",
-      "cas": "19:00",
-      "misto": "Kino Klub, Černošice",
-      "sKym": "Hovado Boys",
-      "udalost": "https://www.facebook.com/events/1359563706167581/"
-    },
-        {
       "datum": "16. 11. 2026",
       "cas": "20:00",
       "misto": "Modrá Vopice, Praha",
-      "sKym": "Bude upřesněno",
+      "sKym": "Flat Freaks, Paragraf 219, Foulborn",
       "udalost": "https://www.facebook.com/events/1645267793603635"
     },
     {
@@ -30,6 +16,16 @@
     }
   ],
   "probehle": [
+    {
+      "datum": "23. 10. 2026",
+      "misto": "Kino Klub, Černošice",
+      "sKym": "Hovado Boys"
+    },
+    {
+      "datum": "14. 10. 2026",
+      "misto": "Vagon Club, Praha",
+      "sKym": "Soul Keeper, Vivid Eyes"
+    },
     {
       "datum": "04. 10. 2026",
       "misto": "Garáž Fest — Malešický park, Praha",
