@@ -51,14 +51,16 @@ type MerchItem = {
   description: string;
   image: string;
   backImage?: string;
+  imagePosition?: string;
 };
 
 const merchItems: MerchItem[] = [
   {
     name: "Triko",
     description: "Svoje v kotli propotíš, v tomhle pak odejdeš!",
-    image: "/triko-%C4%8Deln%C4%9B.jpg",
+    image: "/triko-zepredu-podruhe.jpg",
     backImage: "/triko-z%C3%A1da.jpg",
+    imagePosition: "35% 50%",
   },
   {
     name: "Čepice",
@@ -220,7 +222,7 @@ function Index() {
           aria-controls="history-list"
         >
           <span className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-            <span className="font-display text-3xl uppercase text-mascot-blue md:text-4xl">Historie</span>
+            <span className="font-display text-4xl uppercase text-mascot-blue md:text-5xl">Historie</span>
             <span className="font-display text-xl text-mascot-blue sm:text-2xl">{historie[0]?.rok}–{historie[historie.length - 1]?.rok}</span>
           </span>
           <span className="font-display text-3xl text-mascot-blue" aria-hidden="true">{historyOpen ? "−" : "+"}</span>
@@ -269,21 +271,21 @@ function Index() {
                 type="button"
                 onClick={() => setSelectedMerchImage({ src: image, title: item.name, caption })}
                 aria-label={`Zvětšit fotku: ${item.name}, ${caption}`}
-                className="group block size-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                className="group absolute inset-0 block size-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
               >
-                <img src={image} loading="lazy" alt={`${item.name} — ${caption}`} className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
-                <span className="absolute bottom-3 right-3 grid size-9 place-items-center border border-white/40 bg-background/85 text-foreground" aria-hidden="true"><Expand className="size-4" /></span>
+                <img src={image} loading="lazy" alt={`${item.name} — ${caption}`} style={{ objectPosition: item.backImage && !shirtBack ? item.imagePosition : "center" }} className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+                <span className={`absolute grid size-9 place-items-center border border-white/40 bg-background/85 text-foreground ${item.backImage ? "bottom-12 right-3" : "bottom-3 right-3"}`} aria-hidden="true"><Expand className="size-4" /></span>
               </button>
+              {item.backImage && <div role="group" aria-label="Pohled na tričko" className="absolute inset-x-0 bottom-0 z-10 grid grid-cols-2 border-t border-white/30 bg-background/90 backdrop-blur-sm">
+                {[false, true].map((showBack) => <button
+                  key={String(showBack)}
+                  type="button"
+                  onClick={() => setShirtBack(showBack)}
+                  aria-pressed={shirtBack === showBack}
+                  className={`min-h-10 px-2 text-xs font-bold uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary ${shirtBack === showBack ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-surface hover:text-foreground"}`}
+                >{showBack ? "Zadní" : "Přední"}</button>)}
+              </div>}
             </div>
-            {item.backImage && <div role="group" aria-label="Pohled na tričko" className="grid grid-cols-2 border-b border-border">
-              {[false, true].map((showBack) => <button
-                key={String(showBack)}
-                type="button"
-                onClick={() => setShirtBack(showBack)}
-                aria-pressed={shirtBack === showBack}
-                className={`min-h-10 px-2 text-xs font-bold uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary ${shirtBack === showBack ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-surface hover:text-foreground"}`}
-              >{showBack ? "Zadní" : "Přední"}</button>)}
-            </div>}
             <div className="space-y-2 p-3 sm:p-4">
               <h3 className="font-display text-lg uppercase leading-tight sm:text-2xl">{item.name}</h3>
               <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">{item.description}</p>
@@ -314,7 +316,7 @@ function Index() {
         aria-controls="lyrics-list"
       >
         <span className="flex flex-col items-start gap-1">
-          <span className="font-display text-4xl uppercase md:text-5xl">Texty</span>
+          <span className="font-display text-5xl uppercase md:text-6xl">Texty</span>
           <span className="text-[0.65rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">Vstup na vlastní nebezpečí</span>
         </span>
         <span className="font-display text-3xl text-primary" aria-hidden="true">{lyricsOpen ? "−" : "+"}</span>
