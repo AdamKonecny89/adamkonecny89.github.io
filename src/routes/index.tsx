@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, ArrowUpRight, Download, Facebook, FileImage, Instagram, Menu, Music2, X, Youtube } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Download, Expand, Facebook, FileImage, Instagram, Menu, Music2, X, Youtube } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import koncerty from "@/data/koncerty.json";
-import galerie from "@/data/galerie.json";
 import novinky from "@/data/novinky.json";
 import texty from "@/data/texty.json";
 import clenove from "@/data/clenove.json";
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
 });
 
 const nav = [
-  ["Novinky", "novinky"], ["Kapela", "kapela"], ["Hudba", "hudba"], ["Koncerty", "koncerty"], ["Galerie", "galerie"], ["Texty", "texty"], ["Kontakt", "kontakt"], ["Pro pořadatele", "poradatele"],
+  ["Novinky", "novinky"], ["Kapela", "kapela"], ["Hudba", "hudba"], ["Koncerty", "koncerty"], ["Texty", "texty"], ["Merch", "merch"], ["Kontakt", "kontakt"], ["Pro pořadatele", "poradatele"],
 ];
 
 const spotifyAlbum = "https://open.spotify.com/album/4BGzsuFGCm2NjSCeLtaoUr?si=366bFKPYRM-Jlsy-GjHz6Q";
@@ -44,6 +44,37 @@ const organizerFiles = [
   { label: "Logo — bílá verze", format: "SVG", href: "/NAPIS-BILY.svg" },
   { label: "Logo — černá verze", format: "SVG", href: "/NAPIS-CERNY.svg" },
   { label: "Samolepková verze", format: "SVG", href: "/verze-sticker.svg" },
+];
+
+type MerchItem = {
+  name: string;
+  description: string;
+  image: string;
+  backImage?: string;
+};
+
+const merchItems: MerchItem[] = [
+  {
+    name: "Triko",
+    description: "Svoje v kotli propotíš, v tomhle pak odejdeš!",
+    image: "/triko-%C4%8Deln%C4%9B.jpg",
+    backImage: "/triko-z%C3%A1da.jpg",
+  },
+  {
+    name: "Čepice",
+    description: "Protože teplo vzadu někdy nemusí stačit.",
+    image: "/%C4%8Depice%20detail.jpg",
+  },
+  {
+    name: "Placky",
+    description: "Placička kamkoliv, bráško.",
+    image: "/placky.png",
+  },
+  {
+    name: "CD",
+    description: "CD do poličky nebo auta z minulýho tisíciletí.",
+    image: "/CD-foto.jpg",
+  },
 ];
 
 const songLinks: Record<string, { spotify: string; youtube: string }> = {
@@ -85,7 +116,7 @@ function Lyrics({ text }: { text: string }) {
     current.push(line);
   }
   if (current.length) stanzas.push(current);
-  return <div className="font-lyrics space-y-6 text-[1.05rem] leading-[1.55] text-foreground/85">
+  return <div className="font-lyrics space-y-3 text-[0.92rem] leading-[1.55] text-foreground/85">
     {stanzas.map((stanza, i) => <p key={i}>
       {stanza.map((line, j) => <span key={j} className="block">{line}</span>)}
     </p>)}
@@ -93,26 +124,18 @@ function Lyrics({ text }: { text: string }) {
 }
 
 function SectionTitle({ children }: { children: string }) {
-  return <div className="mb-12 border-b border-border pb-5"><h2 className="font-display text-4xl uppercase md:text-6xl">{children}</h2></div>;
+  return <div className="mb-8 border-b border-border pb-4 md:mb-10 md:pb-5"><h2 className="font-display text-4xl uppercase md:text-6xl">{children}</h2></div>;
 }
 
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [pastOpen, setPastOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const [lyricsOpen, setLyricsOpen] = useState(false);
   const [openSong, setOpenSong] = useState<string | null>(null);
-  const [lightbox, setLightbox] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (lightbox === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightbox(null);
-      if (e.key === "ArrowRight") setLightbox((i) => (i === null ? i : (i + 1) % galerie.length));
-      if (e.key === "ArrowLeft") setLightbox((i) => (i === null ? i : (i - 1 + galerie.length) % galerie.length));
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [lightbox]);
+  const [shirtBack, setShirtBack] = useState(false);
+  const [selectedMerchImage, setSelectedMerchImage] = useState<{ src: string; title: string; caption: string } | null>(null);
 
 
   return <main className="overflow-x-hidden bg-background text-foreground">
@@ -140,13 +163,13 @@ function Index() {
     </section>
 
 
-    <section id="novinky" className="border-b border-border bg-surface"><div className="section-shell">
+    <section id="novinky" className="border-b border-border bg-surface"><div className="section-shell !py-12 md:!py-16">
       <SectionTitle>Novinky</SectionTitle>
       <div className="border-t border-border">
-        {novinky.map((novinka, index) => <article key={`${novinka.datum}-${novinka.nadpis}`} className="grid gap-5 border-b border-border py-8 md:grid-cols-[10rem_1fr_auto] md:items-start md:gap-8">
+        {novinky.map((novinka, index) => <article key={`${novinka.datum}-${novinka.nadpis}`} className="grid gap-4 border-b border-border py-5 md:grid-cols-[10rem_1fr_auto] md:items-start md:gap-8 md:py-6">
           <div className="flex items-center gap-3"><span className={`size-2 ${index % 3 === 0 ? "bg-primary" : index % 3 === 1 ? "bg-mascot-blue" : "bg-mascot-orange"}`} aria-hidden="true"/><time className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{novinka.datum}</time></div>
-          <div><h3 className="font-display text-2xl uppercase md:text-4xl">{novinka.nadpis}</h3><p className="mt-3 max-w-2xl text-lg leading-relaxed text-muted-foreground">{novinka.text}</p></div>
-          {novinka.odkaz && <a href={novinka.odkaz} className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-mascot-orange hover:text-primary">{novinka.odkazText}<ArrowDown className="size-4"/></a>}
+          <div><h3 className="font-display text-xl uppercase md:text-3xl">{novinka.nadpis}</h3><p className="mt-2 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">{novinka.text}</p></div>
+          {novinka.odkaz && <a href={novinka.odkaz} className="inline-flex items-center gap-2 text-[0.65rem] font-black uppercase tracking-[0.22em] text-mascot-orange hover:text-primary md:text-[0.7rem]">{novinka.odkazText}<ArrowDown className="size-4"/></a>}
         </article>)}
       </div>
     </div></section>
@@ -188,16 +211,29 @@ function Index() {
         </div>
       </div>
 
-      <div className="mt-20">
-        <h3 className="font-display text-2xl uppercase text-mascot-blue md:text-3xl">Historie</h3>
-        <ol className="mt-8 border-l border-border pl-6 md:pl-10">
-          {historie.map((milnik, index) => <li key={milnik.rok} className="relative pb-10 last:pb-0">
-            <span className={`absolute -left-[1.85rem] top-2 size-3 md:-left-[2.85rem] ${index % 3 === 0 ? "bg-primary" : index % 3 === 1 ? "bg-mascot-blue" : "bg-mascot-orange"}`} aria-hidden="true"/>
-            <p className="font-display text-2xl uppercase leading-none md:text-4xl">{milnik.rok}</p>
-            <h4 className="mt-3 text-sm font-bold uppercase tracking-[0.15em]">{milnik.nadpis}</h4>
-            <p className="mt-2 max-w-2xl leading-relaxed text-muted-foreground">{milnik.text || "Doplníme brzy."}</p>
+      <div className="mt-12 md:mt-16">
+        <button
+          type="button"
+          onClick={() => setHistoryOpen(!historyOpen)}
+          className={`flex w-full items-center justify-between border border-l-4 bg-surface px-4 py-4 text-left transition-colors hover:bg-mascot-blue/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mascot-blue md:py-5 ${historyOpen ? "border-mascot-blue/70 border-l-mascot-blue" : "border-border border-l-mascot-blue"}`}
+          aria-expanded={historyOpen}
+          aria-controls="history-list"
+        >
+          <span className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+            <span className="font-display text-3xl uppercase text-mascot-blue md:text-4xl">Historie</span>
+            <span className="font-display text-xl text-mascot-blue sm:text-2xl">{historie[0]?.rok}–{historie[historie.length - 1]?.rok}</span>
+          </span>
+          <span className="font-display text-3xl text-mascot-blue" aria-hidden="true">{historyOpen ? "−" : "+"}</span>
+        </button>
+        {historyOpen && <ol id="history-list" className="divide-y divide-border border-b border-border">
+          {historie.map((milnik, index) => <li key={`${milnik.rok}-${milnik.nadpis}`} className="grid grid-cols-[3.5rem_1fr] gap-3 py-4 sm:grid-cols-[4.5rem_1fr] sm:gap-5">
+            <span className={`pt-0.5 font-display text-xl uppercase leading-none sm:text-2xl ${index % 3 === 0 ? "text-primary" : index % 3 === 1 ? "text-mascot-blue" : "text-mascot-orange"}`}>{milnik.rok}</span>
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-[0.12em] sm:text-sm">{milnik.nadpis}</h4>
+              <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-muted-foreground">{milnik.text || "Doplníme brzy."}</p>
+            </div>
           </li>)}
-        </ol>
+        </ol>}
       </div>
     </section>
 
@@ -210,40 +246,83 @@ function Index() {
     </div></section>
 
 
-    <section id="koncerty" className="border-y border-border bg-surface"><div className="section-shell">
+    <section id="koncerty" className="border-y border-border bg-background"><div className="section-shell">
       <SectionTitle>Koncerty</SectionTitle>
       <div className="divide-y divide-border border-y border-border">{koncerty.nadchazejici.map((show) => <article key={`${show.datum}-${show.misto}`} className="grid gap-5 py-7 md:grid-cols-[160px_100px_220px_1fr_100px] md:items-center"><strong className="font-display text-2xl uppercase text-primary">{show.datum}</strong><span className="text-sm font-bold">{show.cas}</span><div><p className="font-bold uppercase">{show.misto}</p><p className="text-sm text-muted-foreground md:hidden">S kým: {show.sKym}</p></div><p className="hidden text-sm text-muted-foreground md:block">S kým: {show.sKym}</p>{show.udalost ? <a href={show.udalost} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-primary">Událost <ArrowUpRight className="size-4"/></a> : <span className="text-xs font-bold uppercase text-muted-foreground">Brzy</span>}</article>)}</div>
       <button onClick={() => setPastOpen(!pastOpen)} className="mt-8 flex w-full items-center justify-between border-b border-border py-5 text-left font-display text-xl uppercase hover:text-primary" aria-expanded={pastOpen}>Proběhlé koncerty <span>{pastOpen ? "−" : "+"}</span></button>
       {pastOpen && <div className="divide-y divide-border">{koncerty.probehle.map((show) => <div key={`${show.datum}-${show.misto}`} className="grid gap-5 py-5 text-muted-foreground md:grid-cols-[160px_320px_1fr] md:items-center"><span>{show.datum}</span><span>{show.misto}</span><span>S kým: {show.sKym}</span></div>)}</div>}
     </div></section>
 
-    <section id="galerie" className="section-shell">
-      <SectionTitle>Galerie</SectionTitle>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {galerie.map((foto, i) => <button key={foto.id} onClick={() => setLightbox(i)} className="group relative block overflow-hidden border border-border bg-surface text-left">
-          <img src={foto.src} loading="lazy" alt={foto.caption} className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"/>
-        </button>)}
+    <section id="merch" className="border-y border-border bg-surface"><div className="section-shell">
+      <SectionTitle>Merch</SectionTitle>
+      <div className="mb-8 max-w-2xl">
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-mascot-orange">Rock’n’roll outfit</p>
+        <p className="mt-3 text-lg leading-relaxed text-muted-foreground">K mání na koncertech. Kdyby Tě na něj máma nepustila, napiš nám a domluvíme to.</p>
       </div>
-      {galerie.length === 0 && <p className="text-muted-foreground">Fotky brzy přibudou.</p>}
-    </section>
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+        {merchItems.map((item) => {
+          const image = item.backImage && shirtBack ? item.backImage : item.image;
+          const caption = item.backImage ? (shirtBack ? "Zadní strana" : "Přední strana") : item.name;
+          return <article key={item.name} className="overflow-hidden border border-border bg-background">
+            <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+              <button
+                type="button"
+                onClick={() => setSelectedMerchImage({ src: image, title: item.name, caption })}
+                aria-label={`Zvětšit fotku: ${item.name}, ${caption}`}
+                className="group block size-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+              >
+                <img src={image} loading="lazy" alt={`${item.name} — ${caption}`} className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+                <span className="absolute bottom-3 right-3 grid size-9 place-items-center border border-white/40 bg-background/85 text-foreground" aria-hidden="true"><Expand className="size-4" /></span>
+              </button>
+            </div>
+            {item.backImage && <div role="group" aria-label="Pohled na tričko" className="grid grid-cols-2 border-b border-border">
+              {[false, true].map((showBack) => <button
+                key={String(showBack)}
+                type="button"
+                onClick={() => setShirtBack(showBack)}
+                aria-pressed={shirtBack === showBack}
+                className={`min-h-10 px-2 text-xs font-bold uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary ${shirtBack === showBack ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-surface hover:text-foreground"}`}
+              >{showBack ? "Zadní" : "Přední"}</button>)}
+            </div>}
+            <div className="space-y-2 p-3 sm:p-4">
+              <h3 className="font-display text-lg uppercase leading-tight sm:text-2xl">{item.name}</h3>
+              <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">{item.description}</p>
+            </div>
+          </article>;
+        })}
+      </div>
+      <Dialog open={selectedMerchImage !== null} onOpenChange={(open) => { if (!open) setSelectedMerchImage(null); }}>
+        <DialogContent className="fixed inset-0 z-50 grid h-[100dvh] w-screen max-w-none translate-x-0 translate-y-0 place-items-center gap-0 overflow-hidden border-0 bg-black/95 p-0 text-white shadow-none outline-none sm:rounded-none">
+          <DialogHeader className="sr-only">
+            <DialogTitle>{selectedMerchImage?.title}</DialogTitle>
+            <DialogDescription>{selectedMerchImage?.caption}</DialogDescription>
+          </DialogHeader>
+          {selectedMerchImage && <img src={selectedMerchImage.src} alt={`${selectedMerchImage.title} — ${selectedMerchImage.caption}`} className="h-auto w-auto max-h-[92dvh] max-w-[94vw] object-contain" />}
+        </DialogContent>
+      </Dialog>
+    </div></section>
 
-    {lightbox !== null && galerie[lightbox] && <div role="dialog" aria-modal="true" onClick={() => setLightbox(null)} className="fixed inset-0 z-[100] grid place-items-center bg-black/95 p-4">
-      <button aria-label="Zavřít" onClick={() => setLightbox(null)} className="absolute right-5 top-5 grid size-11 place-items-center border border-border text-foreground hover:border-primary hover:text-primary"><X/></button>
-      <figure onClick={(e) => e.stopPropagation()} className="max-h-full">
-        <img src={galerie[lightbox]!.src} alt={galerie[lightbox]!.caption} className="max-h-[85vh] w-auto max-w-full object-contain"/>
-      </figure>
-      {galerie.length > 1 && <>
-        <button aria-label="Předchozí" onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i === null ? i : (i - 1 + galerie.length) % galerie.length)); }} className="absolute left-3 top-1/2 grid size-11 -translate-y-1/2 place-items-center border border-border hover:border-primary hover:text-primary">‹</button>
-        <button aria-label="Další" onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i === null ? i : (i + 1) % galerie.length)); }} className="absolute right-3 top-1/2 grid size-11 -translate-y-1/2 place-items-center border border-border hover:border-primary hover:text-primary">›</button>
-      </>}
-    </div>}
-
-    <section id="texty" className="section-shell">
-      <SectionTitle>Texty</SectionTitle>
-      <div className="border-t border-border">{texty.map((song) => { const open = openSong === song.nazev; const links = songLinks[song.nazev]; return <div key={song.nazev} className="border-b border-border"><button onClick={() => setOpenSong(open ? null : song.nazev)} className="flex w-full items-center gap-5 py-6 text-left hover:text-primary" aria-expanded={open}><span className="text-xs text-primary">{song.cislo}</span><span className="flex-1 font-display text-xl uppercase md:text-3xl">{song.nazev}</span><span className="text-3xl">{open ? "−" : "+"}</span></button>{open && <div className="max-w-2xl pb-10 pl-11">
-        {links && <div className="mb-6 flex items-center gap-4"><span className="text-[0.6rem] font-black uppercase tracking-[0.3em] text-muted-foreground">Poslechni si</span><a href={links.spotify} target="_blank" rel="noreferrer" aria-label={`${song.nazev} na Spotify`} className="text-muted-foreground transition-colors hover:text-primary"><img src="/Spotify_icon.svg" alt="Spotify" className="size-4" /></a><a href={links.youtube} target="_blank" rel="noreferrer" aria-label={`${song.nazev} na YouTube`} className="text-muted-foreground transition-colors hover:text-mascot-orange"><img src="/YouTube_full-color_icon.svg" alt="YouTube" className="size-4" /></a></div>}
+    <section id="texty" className="section-shell !py-12 md:!py-16">
+      <button
+        type="button"
+        onClick={() => {
+          setLyricsOpen(!lyricsOpen);
+          setOpenSong(null);
+        }}
+        className={`mb-8 flex w-full items-center justify-between border border-l-4 bg-surface px-4 py-4 text-left transition-colors hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary md:mb-10 md:py-5 ${lyricsOpen ? "border-primary/70 border-l-primary" : "border-border border-l-primary"}`}
+        aria-expanded={lyricsOpen}
+        aria-controls="lyrics-list"
+      >
+        <span className="flex flex-col items-start gap-1">
+          <span className="font-display text-4xl uppercase md:text-5xl">Texty</span>
+          <span className="text-[0.65rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">Vstup na vlastní nebezpečí</span>
+        </span>
+        <span className="font-display text-3xl text-primary" aria-hidden="true">{lyricsOpen ? "−" : "+"}</span>
+      </button>
+      {lyricsOpen && <div id="lyrics-list" className="border-t border-border">{texty.map((song) => { const open = openSong === song.nazev; const links = songLinks[song.nazev]; return <div key={song.nazev} className="border-b border-border"><button onClick={() => setOpenSong(open ? null : song.nazev)} className="flex w-full items-center gap-5 py-4 text-left hover:text-primary md:py-5" aria-expanded={open}><span className="text-xs text-primary">{song.cislo}</span><span className="flex-1 font-display text-lg uppercase md:text-2xl">{song.nazev}</span><span className="text-2xl md:text-3xl">{open ? "−" : "+"}</span></button>{open && <div className="max-w-xl pb-8 pl-7 md:pl-10">
+        {links && <div className="mb-4 flex items-center gap-4"><span className="text-[0.6rem] font-black uppercase tracking-[0.3em] text-muted-foreground">Poslechni si</span><a href={links.spotify} target="_blank" rel="noreferrer" aria-label={`${song.nazev} na Spotify`} className="text-muted-foreground transition-colors hover:text-primary"><img src="/Spotify_icon.svg" alt="Spotify" className="size-4" /></a><a href={links.youtube} target="_blank" rel="noreferrer" aria-label={`${song.nazev} na YouTube`} className="text-muted-foreground transition-colors hover:text-mascot-orange"><img src="/YouTube_full-color_icon.svg" alt="YouTube" className="size-4" /></a></div>}
         <Lyrics text={song.text}/>
-      </div>}</div>})}</div>
+      </div>}</div>})}</div>}
     </section>
 
     <section id="kontakt" className="border-t border-border bg-surface"><div className="section-shell">
