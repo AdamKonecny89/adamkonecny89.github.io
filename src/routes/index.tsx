@@ -258,7 +258,7 @@ function Index() {
     <section id="merch" className="border-y border-border bg-surface"><div className="section-shell">
       <SectionTitle>Merch</SectionTitle>
       <div className="mb-8 max-w-2xl">
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-mascot-orange">Rock’n’roll outfit</p>
+        <p className="text-base font-bold uppercase tracking-[0.2em] text-mascot-orange">Rock’n’roll outfit</p>
         <p className="mt-3 text-lg leading-relaxed text-muted-foreground">K mání na koncertech. Kdyby Tě na něj máma nepustila, napiš nám a domluvíme to.</p>
       </div>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
@@ -331,7 +331,7 @@ function Index() {
       <SectionTitle>Kontakt</SectionTitle>
       <div className="max-w-3xl">
         <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Booking / koncerty / média</p>
-        <a href="mailto:spiritdivociny@gmail.com" style={{ wordBreak: "normal" }} className="mt-4 block font-display text-[clamp(1.5rem,4vw,3rem)] uppercase leading-none hover:text-primary md:text-5xl">spiritdivociny@gmail.com</a>
+        <a href="mailto:spiritdivociny@gmail.com" className="mt-4 block break-words font-display text-base uppercase leading-tight hover:text-primary sm:text-2xl md:text-5xl">spiritdivociny@gmail.com</a>
         <a href="tel:+420732757535" className="mt-5 block text-xl font-bold hover:text-primary">+420 732 757 535</a>
         <div className="mt-12 flex gap-4">{[
           { label: "Facebook", href: "https://www.facebook.com/SpiritDivociny", icon: "/facebook-pismeno.svg" },
