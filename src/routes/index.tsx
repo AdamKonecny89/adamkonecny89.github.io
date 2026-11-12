@@ -141,7 +141,7 @@ function Index() {
 
 
   return <main className="overflow-x-hidden bg-background text-foreground">
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-mascot-blue/30 bg-background/90 backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-mascot-blue/30 bg-background">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-8">
         <a href="#top" className="font-display text-xl uppercase leading-none md:text-2xl"><span className="text-primary">Spirit</span><br/><span className="text-mascot-orange">Divočiny</span></a>
         <nav className="hidden items-center gap-4 md:flex lg:gap-6">{nav.map(([label, id], index) => <a key={id} href={`#${id}`} className={`text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground transition-colors lg:text-xs lg:tracking-[0.18em] ${index % 3 === 0 ? "hover:text-mascot-blue" : index % 3 === 1 ? "hover:text-primary" : "hover:text-mascot-orange"}`}>{label}</a>)}</nav>
