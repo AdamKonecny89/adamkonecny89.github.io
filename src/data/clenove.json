@@ -1,6 +1,6 @@
 [
-  { "id": "vojta", "jmeno": "Vojta", "role": "Zpěv / kytara", "foto": "/medailonek Vojta.jpg", "bio": "" },
-  { "id": "matous", "jmeno": "Matouš", "role": "Kytara", "foto": "/medailonek Matouš.jpg", "bio": "" },
-  { "id": "pawel", "jmeno": "Pawel", "role": "Baskytara", "foto": "/pawel-medailonek.jpg", "bio": "" },
-  { "id": "adam", "jmeno": "Adam", "role": "Bicí", "foto": "/medailonek Adam.jpg", "bio": "" }
+  { "id": "vojta", "jmeno": "Vojta", "role": "Zpěv / kytara", "foto": "/medailonek Vojta.jpg", "bio": "Mozek kapely, textař, polyglot. Díky tomu můžeme mít turné mimo jiné v Japonsku, Saudské Arábii, nebo Vietnamu. Jeho texty pohladí a léčí duši, jakožto fyzioterapeut napravuje zničený těla.", "poznavaciZnameni": "Postava Apollóna s vizáží Thora."},
+  { "id": "matous", "jmeno": "Matouš", "role": "Kytara", "foto": "/medailonek Matouš.jpg", "bio": "Vládce kytary č.2. Trochu jako Clark Kent - přes den sedí v kanclu a řeší stavební projekty, doma pak sype nápady jak vylepšit stávající songy. Typicky nám tyhle nápady chodí do zpráv zhruba kolem půlnoci.", "poznavaciZnameni": "Nezdraví. Rovnou dává teplý (vřelý) objetí." },
+  { "id": "pawel", "jmeno": "Pawel", "role": "Baskytara", "foto": "/pawel-medailonek.jpg", "bio": "Pawel (aka Chomik) umí na pódiu udělat show. S baskytarou se asi už narodil, přestože tvrdí, že si to nepamatuje. Ve volném čase šlape do pedálů bicyklu a nebo naopak dobíjí elektrolyty Únětickým pivem.", "poznavaciZnameni": "Leopardí košile. Síťovaná košile. Někdy bez košile." },
+  { "id": "adam", "jmeno": "Adam", "role": "Bicí", "foto": "/medailonek Adam.jpg", "bio": "Celoživotní punkáč. První punkový koncerty odehrál dřív než dostal prvního francouzáka. Je nerad středem pozornosti, takže když se rozhodoval na co bude hrát, bicí byly jasná volba.", "poznavaciZnameni": "Když se svlíkne, vypadá jako omalovánky s pupíkem." }
 ]
