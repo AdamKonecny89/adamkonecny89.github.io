@@ -195,6 +195,7 @@ function Index() {
               pawel: "object-[center_22%]",
               adam: "object-center",
             }[clen.id] ?? "object-center";
+            const accentClass = index % 3 === 0 ? "text-primary" : index % 3 === 1 ? "text-mascot-blue" : "text-mascot-orange";
 
             return <article key={clen.id} className="border border-border bg-surface">
               <div className="relative aspect-[3/4] w-full overflow-hidden bg-background">
@@ -206,7 +207,13 @@ function Index() {
               <div className="p-5">
                 <h4 className="font-display text-3xl uppercase">{clen.jmeno}</h4>
                 <p className="mt-1 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-mascot-orange">{clen.role}</p>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{clen.bio || "Medailonek se chystá."}</p>
+                {clen.bio && <p className="mt-5 whitespace-pre-line text-base font-medium leading-relaxed text-foreground/90">{clen.bio}</p>}
+                {clen.poznavaciZnameni
+                  ? <div className={`${clen.bio ? "mt-6" : "mt-5"} border-l-2 border-current pl-3`}>
+                    <p className={`text-sm font-bold uppercase leading-snug tracking-[0.1em] ${accentClass}`}>Poznávací znamení</p>
+                    <p className="mt-1.5 text-base leading-relaxed text-foreground/90">{clen.poznavaciZnameni}</p>
+                  </div>
+                  : !clen.bio && <p className="mt-5 text-base leading-relaxed text-muted-foreground">Medailonek se chystá.</p>}
               </div>
             </article>;
           })}
@@ -265,7 +272,7 @@ function Index() {
         {merchItems.map((item) => {
           const image = item.backImage && shirtBack ? item.backImage : item.image;
           const caption = item.backImage ? (shirtBack ? "Zadní strana" : "Přední strana") : item.name;
-          return <article key={item.name} className="overflow-hidden border border-border bg-background">
+          return <article key={item.name} className="isolate overflow-hidden border border-border bg-background">
             <div className="relative aspect-[4/5] overflow-hidden bg-muted">
               <button
                 type="button"
@@ -273,10 +280,10 @@ function Index() {
                 aria-label={`Zvětšit fotku: ${item.name}, ${caption}`}
                 className="group absolute inset-0 block size-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
               >
-                <img src={image} loading="lazy" alt={`${item.name} — ${caption}`} style={{ objectPosition: item.backImage && !shirtBack ? item.imagePosition : "center" }} className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+                <img src={image} loading="lazy" alt={`${item.name} — ${caption}`} style={{ objectPosition: item.backImage && !shirtBack ? item.imagePosition : "center" }} className="size-full object-cover" />
                 <span className={`absolute grid size-9 place-items-center border border-white/40 bg-background/85 text-foreground ${item.backImage ? "bottom-12 right-3" : "bottom-3 right-3"}`} aria-hidden="true"><Expand className="size-4" /></span>
               </button>
-              {item.backImage && <div role="group" aria-label="Pohled na tričko" className="absolute inset-x-0 bottom-0 z-10 grid grid-cols-2 border-t border-white/30 bg-background/90 backdrop-blur-sm">
+              {item.backImage && <div role="group" aria-label="Pohled na tričko" className="absolute inset-x-0 bottom-0 z-10 grid grid-cols-2 border-t border-border bg-background">
                 {[false, true].map((showBack) => <button
                   key={String(showBack)}
                   type="button"
