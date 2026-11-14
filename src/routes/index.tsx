@@ -280,7 +280,10 @@ function Index() {
                 aria-label={`Zvětšit fotku: ${item.name}, ${caption}`}
                 className="group absolute inset-0 block size-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
               >
-                <img src={image} loading="lazy" alt={`${item.name} — ${caption}`} style={{ objectPosition: item.backImage && !shirtBack ? item.imagePosition : "center" }} className="size-full object-cover" />
+                {item.backImage ? <>
+                  <img src={item.image} alt={`${item.name} — přední strana`} aria-hidden={shirtBack} style={{ objectPosition: item.imagePosition }} className={`absolute inset-0 size-full object-cover ${shirtBack ? "invisible" : "visible"}`} />
+                  <img src={item.backImage} alt={`${item.name} — zadní strana`} aria-hidden={!shirtBack} style={{ objectPosition: "center" }} className={`absolute inset-0 size-full object-cover ${shirtBack ? "visible" : "invisible"}`} />
+                </> : <img src={image} loading="lazy" alt={`${item.name} — ${caption}`} className="size-full object-cover" />}
                 <span className={`absolute grid size-9 place-items-center border border-white/40 bg-background/85 text-foreground ${item.backImage ? "bottom-12 right-3" : "bottom-3 right-3"}`} aria-hidden="true"><Expand className="size-4" /></span>
               </button>
               {item.backImage && <div role="group" aria-label="Pohled na tričko" className="absolute inset-x-0 bottom-0 z-10 grid grid-cols-2 border-t border-border bg-background">
